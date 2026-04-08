@@ -3,41 +3,23 @@ using UnityEngine;
 public class MouvementPerso : MonoBehaviour
 {
     public float speed = 5f;
-
-    private Vector2 targetPosition;
-    private bool isMoving = false;
+    private Vector3 target;
 
     void Start()
     {
-        targetPosition = transform.position;
+        target = transform.position;
     }
 
     void Update()
     {
-        // Clique souris
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(1))
         {
-            // Convertit la position souris en position monde
-            Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-            targetPosition = mouseWorldPos;
-            isMoving = true;
+            target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            target.z = transform.position.z;
+            Debug.Log(target);
         }
-
-        // Déplacement
-        if (isMoving)
-        {
-            transform.position = Vector2.MoveTowards(
-                transform.position,
-                targetPosition,
-                speed * Time.deltaTime
-            );
-
-            // Stop quand arrivé
-            if (Vector2.Distance(transform.position, targetPosition) < 0.05f)
-            {
-                isMoving = false;
-            }
-        }
+        transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
     }
+
 }
+    
