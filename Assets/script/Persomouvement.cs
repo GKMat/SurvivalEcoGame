@@ -18,13 +18,22 @@ public class Persomouvement
                 newPosition = hit.point;
                 //transfrom.position = newPosition;
                 transform.LookAt(hit.point);
-                Point.position = new Vector3(newPosition.x, Point.transform.position.y,);
+                Point.position = new Vector3(newPosition.x, Point.transform.position.y,newPosition.z);
             }
         }
         if (newPosition != Vector3.zero)
         {
             transform.position = Vector3.MoveTowards(transform.position, newPosition * Time.deltaTime)
     
+        }
+
+        if (transform.position == newPosition || newPosition==Vector3.zero)
+        {
+            Point.GetComponent<MeshRenderer> () .enabled = false;
+        }
+        else
+        {
+            Point.GetComponent<MeshRenderer>().enabled = true;
         }
 
     }
